@@ -1,28 +1,32 @@
 <template>
   <div class="page">
-    <div>
-      {{ message }}
-    </div>
-    <span :title="message1">
-      鼠标悬停几秒钟查看此处动态绑定的提示信息！
-    </span>
-    <p v-if="seen" class="uaStyle">{{ userAgent }}</p>
-    <ol>
-      <list
-        v-for="(todo, index) in todos"
-        :key="index"
-        :index="index"
-        :todo="todo"
-      ></list>
-    </ol>
-    <el-button @click="reverseMessage">逆转消息</el-button>
-    <h3></h3>
-    <el-input
-      v-model="input"
-      placeholder="请输入内容"
-      @blur="addItem"
-      @input="inputFn"
-    ></el-input>
+    <form v-on:submit.prevent="onSubmit">
+      <div>
+        <p>{{ message }}</p>
+        <p>{{ reversedMessage }}</p>
+      </div>
+      <span :title="message1">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+      </span>
+      <p v-if="seen" class="uaStyle">{{ userAgent }}</p>
+      <ol>
+        <list
+          v-for="(todo, index) in todos"
+          :key="index"
+          :index="index"
+          :todo="todo"
+        ></list>
+      </ol>
+      <el-button @click="reverseMessageFn">逆转消息</el-button>
+      <el-input
+        class="mgt-15"
+        v-model="input"
+        placeholder="请输入内容"
+        @blur="addItem"
+        @input="inputFn"
+      ></el-input>
+      <el-input class="mgt-15" type="submit" value="提交"></el-input>
+    </form>
   </div>
 </template>
 <script>
@@ -55,7 +59,7 @@ export default {
     console.log("beforeCreate");
   },
   created() {
-    this.reverseMessage = this._.debounce(this.reverseMessage, 100); // 防抖
+    this.reverseMessageFn = this._.debounce(this.reverseMessageFn, 100); // 防抖
     this.inputFn = this._.throttle(this.inputFn, 100); // 节流
     setTimeout(() => {
       this.seen = !this.seen;
@@ -84,8 +88,19 @@ export default {
       console.log(newVal, oldVal);
     }
   },
+  computed: {
+    reversedMessage() {
+      return this.message
+        .split("")
+        .reverse()
+        .join("");
+    }
+  },
   methods: {
-    reverseMessage() {
+    onSubmit(event) {
+      console.log("submit: ", event);
+    },
+    reverseMessageFn() {
       this.message = this.message
         .split("")
         .reverse()
@@ -115,6 +130,10 @@ export default {
 a {
   display: block;
   text-decoration: none;
+}
+
+.mgt-15 {
+  margin-top: 15px;
 }
 
 .uaStyle {
