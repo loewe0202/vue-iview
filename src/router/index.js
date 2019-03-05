@@ -4,6 +4,8 @@ import Router from "vue-router";
 // 页面
 let Index = () => import(/* webpackChunkName: "index" */ "views/index");
 let Base = () => import(/* webpackChunkName: "base" */ "views/base/base");
+let LearnComponent = () =>
+  import(/* webpackChunkName: "LearnComponent" */ "views/base/learn-component");
 
 Vue.use(Router);
 
@@ -22,8 +24,13 @@ const router = new Router({
       component: Base
     },
     {
+      path: "/base/learncomponent",
+      name: "LearnComponent",
+      component: LearnComponent
+    },
+    {
       path: "*",
-      name: "home",
+      name: "other",
       redirect: "/"
     }
   ]

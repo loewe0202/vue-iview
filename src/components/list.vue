@@ -6,7 +6,5 @@
   </li>
 </template>
 <script>
-export default {
-  props: ["todo", "index"]
-};
+export default { props: ["todo", "index"] };
 </script>

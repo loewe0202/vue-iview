@@ -25,6 +25,121 @@
         @blur="addItem"
         @input="inputFn"
       ></el-input>
+      <template>
+        <p>选择你喜欢的语言</p>
+        <el-radio v-model="radio" label="javascript">javascript</el-radio>
+        <el-radio v-model="radio" label="php">php</el-radio>
+        <el-radio v-model="radio" label="python">python</el-radio>
+      </template>
+      <template>
+        <el-checkbox-group v-model="checkList">
+          <el-checkbox label="复选框 A"></el-checkbox>
+          <el-checkbox label="复选框 B"></el-checkbox>
+          <el-checkbox label="复选框 C"></el-checkbox>
+          <el-checkbox label="禁用" disabled></el-checkbox>
+          <el-checkbox label="选中且禁用" disabled></el-checkbox>
+        </el-checkbox-group>
+      </template>
+      <div class="origin-input">
+        <el-row>
+          <el-col :span="3">
+            <input
+              type="checkbox"
+              id="jack"
+              value="Jack"
+              v-model="checkedNames"
+            />
+            <label for="jack">Jack</label>
+          </el-col>
+          <el-col :span="3">
+            <input
+              type="checkbox"
+              id="john"
+              value="John"
+              v-model="checkedNames"
+            />
+            <label for="john">John</label>
+          </el-col>
+          <el-col :span="3">
+            <input
+              type="checkbox"
+              id="mike"
+              value="Mike"
+              v-model="checkedNames"
+            />
+            <label for="mike">Mike</label>
+          </el-col>
+          <el-col :span="24">
+            <span>Checked names: {{ checkedNames }}</span>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3">
+            <input type="radio" id="one" value="One" v-model="picked" />
+            <label for="one">One</label>
+          </el-col>
+          <el-col :span="3">
+            <input type="radio" id="two" value="Two" v-model="picked" />
+            <label for="two">Two</label>
+          </el-col>
+          <el-col :span="3">
+            <input type="radio" id="three" value="Three" v-model="picked" />
+            <label for="three">Three</label>
+          </el-col>
+          <el-col :span="24">
+            <span>Picked: {{ picked }}</span>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <select v-model="selected">
+              <option
+                v-for="(item, index) in options"
+                :disabled="item.disabled"
+                :key="index"
+              >
+                {{ item.text }}
+              </option>
+            </select>
+            <span>Selected: {{ selected }}</span>
+          </el-col>
+          <el-col :span="24" class="mgt-15">
+            <select v-model="selected2" multiple style="width: 100px;">
+              <option
+                v-for="(item, index) in options"
+                :disabled="item.disabled"
+                :key="index"
+              >
+                {{ item.text }}
+              </option>
+            </select>
+          </el-col>
+          <el-col :span="24">
+            <span>Selected: {{ selected2 }}</span>
+          </el-col>
+        </el-row>
+        <template>
+          <el-row>
+            <el-col :span="24">
+              <!-- 在“change”时而非“input”时更新 -->
+              <input v-model.lazy.trim="lazy_msg" class="el-input__inner" />
+            </el-col>
+            <el-col :span="24">
+              <span>{{ lazy_msg }}</span>
+            </el-col>
+            <el-col :span="24" class="mgt-15">
+              <input
+                v-model.number="age"
+                type="number"
+                class="el-input__inner"
+              />
+            </el-col>
+            <el-col :span="24">
+              <span>年龄：{{ age }}</span>
+            </el-col>
+          </el-row>
+        </template>
+      </div>
       <el-input class="mgt-15" type="submit" value="提交"></el-input>
     </form>
   </div>
@@ -37,6 +152,36 @@ export default {
   },
   data() {
     return {
+      age: 24,
+      lazy_msg: null,
+      selected2: null,
+      options: [
+        {
+          text: "请选择",
+          value: "",
+          disabled: true
+        },
+        {
+          text: "One",
+          value: "A",
+          disabled: false
+        },
+        {
+          text: "Two",
+          value: "B",
+          disabled: false
+        },
+        {
+          text: "Three",
+          value: "C",
+          disabled: false
+        }
+      ],
+      selected: "请选择",
+      picked: "Two",
+      checkedNames: [],
+      checkList: ["选中且禁用", "复选框 A"],
+      radio: "javascript",
       message: "Hello Vue!",
       userAgent: navigator.userAgent,
       message1: "页面加载于 " + new Date().toLocaleString(),
@@ -59,8 +204,10 @@ export default {
     console.log("beforeCreate");
   },
   created() {
-    this.reverseMessageFn = this._.debounce(this.reverseMessageFn, 100); // 防抖
-    this.inputFn = this._.throttle(this.inputFn, 100); // 节流
+    this.reverseMessageFn = this._.debounce(this.reverseMessageFn, 100); //防抖
+
+    this.inputFn = this._.throttle(this.inputFn, 100); //节流
+
     setTimeout(() => {
       this.seen = !this.seen;
     }, 3000);
@@ -84,8 +231,14 @@ export default {
     console.log("destory");
   },
   watch: {
+    checkList(newVal, oldVal) {
+      console.log("checkList: ", newVal, oldVal);
+    },
+    radio(newVal, oldVal) {
+      console.log("radio: ", newVal, oldVal);
+    },
     input(newVal, oldVal) {
-      console.log(newVal, oldVal);
+      console.log("input: ", newVal, oldVal);
     }
   },
   computed: {
@@ -121,23 +274,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.page {
-  padding: 15px;
-  text-align: justify;
-  line-height: 1.8;
-}
-
-a {
-  display: block;
-  text-decoration: none;
-}
-
-.mgt-15 {
-  margin-top: 15px;
-}
-
-.uaStyle {
-  color: #409eff;
-  word-break: break-all;
-}
+@import "assets/views/base/base.scss";
 </style>
