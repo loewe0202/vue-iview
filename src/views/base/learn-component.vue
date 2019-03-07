@@ -108,5 +108,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "assets/views/base/base.scss";
+@import "assets/views/base/learn-component.scss";
 </style>
