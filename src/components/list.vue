@@ -1,8 +1,6 @@
 <template>
   <li>
-    <div :id="'list' + index">
-      {{ todo.text }}
-    </div>
+    <div :id="'list' + index">{{ todo.text }}</div>
   </li>
 </template>
 <script>

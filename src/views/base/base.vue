@@ -1,13 +1,11 @@
 <template>
   <div class="page">
-    <form v-on:submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit">
       <div>
         <p>{{ message }}</p>
         <p>{{ reversedMessage }}</p>
       </div>
-      <span :title="message1">
-        鼠标悬停几秒钟查看此处动态绑定的提示信息！
-      </span>
+      <span :title="message1">鼠标悬停几秒钟查看此处动态绑定的提示信息！</span>
       <p v-if="seen" class="uaStyle">{{ userAgent }}</p>
       <ol>
         <list
@@ -97,9 +95,8 @@
                 v-for="(item, index) in options"
                 :disabled="item.disabled"
                 :key="index"
+                >{{ item.text }}</option
               >
-                {{ item.text }}
-              </option>
             </select>
             <span>Selected: {{ selected }}</span>
           </el-col>
@@ -109,9 +106,8 @@
                 v-for="(item, index) in options"
                 :disabled="item.disabled"
                 :key="index"
+                >{{ item.text }}</option
               >
-                {{ item.text }}
-              </option>
             </select>
           </el-col>
           <el-col :span="24">
@@ -154,7 +150,7 @@ export default {
     return {
       age: 24,
       lazy_msg: null,
-      selected2: null,
+      selected2: [],
       options: [
         {
           text: "请选择",
