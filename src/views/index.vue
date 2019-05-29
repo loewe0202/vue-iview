@@ -2,7 +2,7 @@
   <div class="page" id="page">
     <c-header :title="title" :back="back" />
     <div class="container">
-      13112
+      1311222323
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
       back: false,
       title: "首页"
     };
-  }
+  },
+  created() {}
 };
 </script>
 <style lang="scss" scoped>
