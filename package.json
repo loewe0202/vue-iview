@@ -10,9 +10,8 @@
     "format-code": "prettier-eslint --write \"src/**/*.js\" \"src/**/*.vue\""
   },
   "dependencies": {
-    "element-ui": "^2.5.4",
+    "@nutui/nutui": "^2.1.7",
     "lodash": "^4.17.15",
-    "normalize.css": "^8.0.1",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

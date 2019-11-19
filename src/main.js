@@ -3,13 +3,12 @@ import App from "./App.vue";
 import router from "router/index";
 import store from "store/index";
 
-import "normalize.css"; // 初始化样式
-import "assets/style.scss"; // 公共样式
+// 公共样式
+import "assets/reset.scss";
 
-// element-ui
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-Vue.use(ElementUI);
+// NutUI
+import NutUI from "@nutui/nutui";
+NutUI.install(Vue);
 
 // lodash
 import lodash from "utils/lodash.js";
